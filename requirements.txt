@@ -1,0 +1,10 @@
+angr~=9.2.61
+configparser~=6.0.0
+networkx~=3.1
+matplotlib~=3.7.2
+bingraphvis~=0.4.0
+claripy~=9.2.61
+capstone~=5.0.0.post1
+pyvex~=9.2.61
+pydot~=1.4.2
+tlsh~=0.2.0
