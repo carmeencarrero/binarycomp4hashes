@@ -29,12 +29,14 @@ def add_to_database(database, file):
         myHNSW.dump(database)
 
     myHNSW = HNSW.load(database)
-
+    counter = 0
     for func_name, hash_value in function_hashes_binary.items():
         node = CFGHashNode(hash_value, TLSHHashAlgorithm, func_name, file)
         myHNSW.add_node(node)
+        counter = 0 + 1
 
     myHNSW.dump(database)
+    print(f'Number of functions added to database {database}: {counter}')
     print(f'Adding to database {database} from file {file}')
 
 
@@ -63,10 +65,12 @@ def search_database(database, file, percentage):
     myHNSW = HNSW.load(database)
     matched_functions = []
     matched_functions_knn = []
+    counter = 0
 
     print(f'Searching database {database} with file {file} and percentage {percentage}')
     for func_name, hash_binary in function_hashes_binary.items():
         query_node = CFGHashNode(hash_binary, TLSHHashAlgorithm, func_name, file)
+        counter = counter + 1
         results_percentage = myHNSW.percentage_search(query_node, percentage=percentage)
         results_knn = myHNSW.knn_search(query_node, k=5, ef=1)
 
@@ -77,4 +81,5 @@ def search_database(database, file, percentage):
 
     print_matched_functions(matched_functions, file, 1)
     print_matched_functions(matched_functions_knn, file, 2)
+    print(f'Number of functions in the binary {file}: {counter}')
     print('The result of the searching is in matched_functions_percentage/knn_namebinary.txt files')
