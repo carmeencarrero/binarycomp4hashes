@@ -33,7 +33,7 @@ def add_to_database(database, file):
     for func_name, hash_value in function_hashes_binary.items():
         node = CFGHashNode(hash_value, TLSHHashAlgorithm, func_name, file)
         myHNSW.add_node(node)
-        counter = 0 + 1
+        counter = counter + 1
 
     myHNSW.dump(database)
     print(f'Number of functions added to database {database}: {counter}')
@@ -53,7 +53,8 @@ def print_matched_functions(matched_functions, binary, value):
                               f'with the function {func_name_database} in the database (binary:{binary_database})\n')
                 archivo.write("-" * 30 + "\n")
     else:
-        archivo.write("No matched functions found.")
+        with open(archivo, "w") as archivo:
+            archivo.write("No matched functions found.")
 
 
 def search_database(database, file, percentage):
