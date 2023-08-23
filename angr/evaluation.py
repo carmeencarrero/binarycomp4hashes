@@ -17,7 +17,7 @@ def run_angr(binary_file):
 def analyse_program(binary_file):
     logging.info('Print metadata')
     binary = run_angr(binary_file)
-    sys.setrecursionlimit(2500)
+    sys.setrecursionlimit(25000)
     binary.print_metadata()
     return binary.obtain_hashes()
 
@@ -25,7 +25,7 @@ def analyse_program(binary_file):
 def add_to_database(database, file):
     function_hashes_binary = analyse_program(file)
     if not os.path.exists(database):
-        myHNSW = HNSW(M=4, ef=4, Mmax=8, Mmax0=16)
+        myHNSW = HNSW(M=64, ef=64, Mmax=128, Mmax0=256)
         myHNSW.dump(database)
 
     myHNSW = HNSW.load(database)
